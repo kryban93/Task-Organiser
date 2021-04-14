@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DasshboardView = () => {
+const DashboardView = () => {
   return (
     <section>
       <h1>elo</h1>
@@ -10,4 +10,4 @@ const DasshboardView = () => {
   );
 };
 
-export default DasshboardView;
+export default DashboardView;

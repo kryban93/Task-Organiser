@@ -7,7 +7,7 @@ const Nav = () => {
   const [activeTab, setActiveTab] = useState('');
   return (
     <nav className={style.wrapper} data-testid='nav'>
-      <Link to='/' onClick={() => setActiveTab('home')} data-testid='nav-home-btn'>
+      <Link to='/dashboard' onClick={() => setActiveTab('home')} data-testid='nav-home-btn'>
         <img
           src={activeTab === 'home' ? icons.home_active : icons.home}
           alt='home button'
