@@ -12,6 +12,6 @@ describe('Renders website elements properly', () => {
     cy.get('[data-testid="login-form-email-input"]').type('test@test.com');
     cy.get('[data-testid="login-form-password-input"]').type('test123');
     cy.get('[data-testid="login-form-send-btn"]').click();
-    cy.get('[data-testid="signup-form-error"]').should('have.html', 'Failed to log in');
+    cy.get('[data-testid="login-form-error"]').should('have.html', 'Failed to log in');
   });
 });

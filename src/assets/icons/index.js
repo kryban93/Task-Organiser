@@ -8,6 +8,7 @@ import settings from './settings.svg';
 import settings_active from './settings_active.svg';
 import password from './password.svg';
 import profile_yellow from './profile_yellow.svg';
+import plus_white from './plus_white.svg';
 
 const icons = {
   home,
@@ -20,6 +21,7 @@ const icons = {
   settings_active,
   password,
   profile_yellow,
+  plus_white,
 };
 
 export default icons;

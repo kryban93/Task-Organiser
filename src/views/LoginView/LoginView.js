@@ -1,5 +1,5 @@
-import React, { useState, useHistory } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import style from './LoginView.module.scss';
 import icons from '../../assets/icons';
@@ -9,18 +9,18 @@ const LoginView = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
-  //const history = useHistory();
+  const history = useHistory();
 
   const submitFn = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   setError('');
-    //  await login(email, password);
-    //   history.push('/dashboard');
-    // } catch {
-    //   setError('Failed to log in');
-    // }
+    try {
+      setError('');
+      await login(email, password);
+      history.push('/dashboard');
+    } catch {
+      setError('Failed to log in');
+    }
   };
 
   return (

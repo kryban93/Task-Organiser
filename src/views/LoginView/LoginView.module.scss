@@ -31,6 +31,16 @@
   width: 100%;
   margin: 15px;
   display: flex;
+
+  & > input:focus + label {
+    top: -20px;
+    color: $grey-100;
+  }
+
+  & > input:valid + label {
+    top: -20px;
+    color: $grey-100;
+  }
 }
 
 .input {

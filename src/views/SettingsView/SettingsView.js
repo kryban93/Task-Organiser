@@ -1,13 +1,13 @@
 import React from 'react';
 import Nav from '../../components/Nav/Nav';
 
-const NotesView = () => {
+const SettingsView = () => {
   return (
     <section>
-      <p>notes view</p>
+      <p>settings view</p>
       <Nav />
     </section>
   );
 };
 
-export default NotesView;
+export default SettingsView;
