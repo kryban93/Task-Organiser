@@ -7,6 +7,7 @@ import LandingView from './views/LandingView/LandingView';
 import NotesView from './views/NotesView/NotesView';
 import SignUpView from './views/SignUpView/SignUpView';
 import TasksView from './views/TasksView/TasksView';
+import LoginView from './views/LoginView/LoginView';
 
 const App = () => {
   return (
@@ -14,10 +15,8 @@ const App = () => {
       <Router>
         <Nav />
         <Switch>
-          {
-            //<Route exact path='/' component={LandingView} />
-          }
           <Route path='/signUp' component={SignUpView} />
+          <Route path='/login' component={LoginView} />
           <Route exact path='/' component={LandingView} />
           <Route path='/dashboard' component={DashboardView} />
           <Route path='/tasks' component={TasksView} />

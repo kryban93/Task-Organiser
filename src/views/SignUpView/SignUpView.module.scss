@@ -1,4 +1,73 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.wrapper {
+  @include primary-font-400;
+  padding: 20px;
+  margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 65%;
+  margin-bottom: 20px;
+
+  &_text {
+    padding: 5px;
+    color: $grey-100;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  margin: 15px;
+  display: flex;
+}
+
+.input {
+  @include primary-font-400;
+  background-color: transparent;
+  border: none;
+  margin: 10px;
+  padding: 7px 0;
+  width: 100%;
+  color: white;
+  outline: none;
+}
+
+.label {
+  @include primary-font-400;
+  color: $grey-200;
+  position: absolute;
+  left: 0;
+  top: 17px;
+  left: 50px;
+}
+
+.btn {
+  @include primary-font-400;
+  font-size: $fontXxs;
+  color: #fff;
+  background-color: $green-300;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 10px 65px;
+  margin: 20px;
+}
+
+.undertext {
+  color: $grey-200;
+}
+
+.link {
+  color: $grey-100;
 }

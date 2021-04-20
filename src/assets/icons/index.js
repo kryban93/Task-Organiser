@@ -6,6 +6,8 @@ import tasks from './task.svg';
 import tasks_active from './task_active.svg';
 import settings from './settings.svg';
 import settings_active from './settings_active.svg';
+import password from './password.svg';
+import profile_yellow from './profile_yellow.svg';
 
 const icons = {
   home,
@@ -16,6 +18,8 @@ const icons = {
   tasks_active,
   settings,
   settings_active,
+  password,
+  profile_yellow,
 };
 
 export default icons;
