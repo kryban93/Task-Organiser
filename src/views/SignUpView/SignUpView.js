@@ -44,7 +44,7 @@ const SignUpView = () => {
 
       <form onSubmit={submitFn} className={style.form}>
         <div className={style.container}>
-          <img src={icons.profile_yellow} alt='profile icon' className={style.icon} />
+          <img src={icons.email_yellow} alt='profile icon' className={style.icon} />
           <input
             type='email'
             className={style.input}

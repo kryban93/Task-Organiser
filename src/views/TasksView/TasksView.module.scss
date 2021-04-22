@@ -1,0 +1,18 @@
+@import '../../styles/colors.scss';
+
+.btn {
+  position: absolute;
+  display: block;
+  bottom: 60px;
+  right: 10px;
+  background-color: $green-300;
+  border: none;
+  width: 55px;
+  height: 55px;
+  border-radius: 55px;
+
+  &__img {
+    height: 40px;
+    width: 40px;
+  }
+}

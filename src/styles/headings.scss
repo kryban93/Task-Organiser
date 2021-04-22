@@ -2,13 +2,33 @@
 @import './fonts.scss';
 
 h1 {
-  @include primary-font-600;
-  font-size: 1.7rem;
+  @include secondary-font-600;
+  font-size: $fontM;
   margin: 5px;
 }
 
 h2 {
-  @include primary-font-400;
-  font-size: 1.2rem;
+  @include secondary-font-400;
+  font-size: $fontS;
   margin: 5px;
+}
+
+h3 {
+  @include secondary-font-300;
+  font-size: $fontXs;
+}
+
+p {
+  @include primary-font-300;
+  font-size: $fontXxs;
+}
+
+input {
+  @include primary-font-300;
+  font-size: $fontXxs;
+}
+
+label {
+  @include primary-font-300;
+  font-size: $fontXxs;
 }

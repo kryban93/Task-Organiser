@@ -9,6 +9,8 @@ import settings_active from './settings_active.svg';
 import password from './password.svg';
 import profile_yellow from './profile_yellow.svg';
 import plus_white from './plus_white.svg';
+import tags_white from './tags_white.svg';
+import email_yellow from './email_yellow.svg';
 
 const icons = {
   home,
@@ -22,6 +24,8 @@ const icons = {
   password,
   profile_yellow,
   plus_white,
+  tags_white,
+  email_yellow,
 };
 
 export default icons;

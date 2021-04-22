@@ -1,0 +1,65 @@
+@import '../../styles/fonts.scss';
+@import '../../styles/colors.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.container {
+  width: 50%;
+  position: relative;
+  margin: 5px;
+
+  & > input {
+    background-color: $modal-color;
+    border: none;
+    width: 100%;
+    color: white;
+  }
+}
+
+.additional {
+  margin: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  &__item {
+    & > input {
+      display: none;
+    }
+
+    & > label {
+      display: block;
+      padding: 5px;
+    }
+  }
+}
+
+.btn {
+  @include primary-font-400;
+  font-size: $fontXxs;
+  color: #fff;
+  background-color: $green-300;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 10px 65px;
+  margin: 20px;
+}
+
+.img {
+  box-sizing: content-box;
+  background-color: $modal-color;
+  height: 40px;
+  padding: 5px;
+  border-radius: 10px;
+
+  &--active {
+    border-radius: 10px;
+    border: 1px solid $green-300;
+  }
+}
