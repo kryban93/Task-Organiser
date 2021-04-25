@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import style from './SignUpView.module.scss';
 import { useAuth } from '../../contexts/AuthContext';
+import { useUserData } from '../../contexts/UserDataContext';
 import verifyPassword from '../../additional/verifyPassword';
 import icons from '../../assets/icons';
 
@@ -13,6 +14,8 @@ const SignUpView = () => {
   const [error, setError] = useState('');
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const { signUp } = useAuth();
+  const { createUserInFirestore } = useUserData();
+  const history = useHistory();
 
   const submitFn = async (e) => {
     e.preventDefault();
@@ -26,7 +29,14 @@ const SignUpView = () => {
         setError(verifyPassword(password).description);
       } else {
         try {
-          await signUp(email, password);
+          await signUp(email, password)
+            .then(async (user) => {
+              await createUserInFirestore(user, userName);
+            })
+            .catch((error) => {
+              setError(`${error.code}: ${error.message}`);
+            });
+          history.push('/dashboard');
         } catch {
           setError('Failed to sign up');
         }

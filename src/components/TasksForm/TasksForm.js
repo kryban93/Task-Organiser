@@ -1,24 +1,55 @@
 import React, { useState } from 'react';
 import icons from '../../assets/icons';
 import style from './TasksForm.module.scss';
+import Tags from '../Tags/Tags';
+import Categories from '../Categories/Categories';
 
-const TasksForm = () => {
+const TasksForm = ({ handleCloseFormModal }) => {
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [finishDate, setFinishDate] = useState('');
+  const [finishTime, setFinishTime] = useState('');
   const [isTagsActive, setTagsActiveState] = useState(false);
   const [isCategoryActive, setCategoryActiveState] = useState(false);
   const [isAdditionalActive, setAdditionalActiveState] = useState(false);
+  const [tagsArray, setTagsArray] = useState([]);
+  const [category, setCategory] = useState('');
+  const [additionalText, setAdditionalText] = useState('');
 
   const submitFn = (event) => {
     event.preventDefault();
 
-    console.log(`${title}, ${date}, ${time}`);
+    console.log(
+      `${title}, ${finishDate}, ${finishTime}, ${tagsArray}, ${category}, ${additionalText}`
+    );
+  };
+
+  const tagsClickHandleFunction = (event) => {
+    let tagsTempArray = tagsArray;
+
+    if (!tagsArray.includes(event.target.value)) {
+      tagsTempArray.push(event.target.value);
+    } else {
+      tagsTempArray = tagsTempArray.filter((item) => {
+        return item !== event.target.value;
+      });
+    }
+
+    setTagsArray(tagsTempArray);
+  };
+
+  const handleCategorySelect = (event) => {
+    setCategory(event.target.value);
   };
 
   return (
     <div className={style.wrapper}>
-      <h3>What's your next task?</h3>
+      <h3 className={style.header}>What's your next task?</h3>
+      <button
+        onClick={() => handleCloseFormModal()}
+        className={`${style.btn} ${style['btn--close']}`}
+      >
+        <img src={icons.close_white} alt='close form modal icon' />
+      </button>
       <form className={style.form} onSubmit={submitFn}>
         <div className={style.container}>
           <label htmlFor='title'>title</label>
@@ -38,8 +69,8 @@ const TasksForm = () => {
             type='date'
             className={style.input}
             data-testid='tasks-form-date-input'
-            value={date}
-            onChange={(event) => setDate(event.target.value)}
+            value={finishDate}
+            onChange={(event) => setFinishDate(event.target.value)}
           />
         </div>
         <div className={style.container}>
@@ -49,8 +80,8 @@ const TasksForm = () => {
             type='time'
             className={style.input}
             data-testid='tasks-form-time-input'
-            value={time}
-            onChange={(event) => setTime(event.target.value)}
+            value={finishTime}
+            onChange={(event) => setFinishTime(event.target.value)}
           />
         </div>
         <div className={style.additional}>
@@ -67,7 +98,15 @@ const TasksForm = () => {
                 alt='tags button icon'
                 className={isTagsActive ? `${style.img} ${style['img--active']} ` : style.img}
               />
-              <p>tags</p>
+              <p
+                className={
+                  isTagsActive
+                    ? `${style.undertext} ${style['undertext--active']} `
+                    : style.undertext
+                }
+              >
+                tags
+              </p>
             </label>
           </div>
           <div className={style.additional__item}>
@@ -79,11 +118,19 @@ const TasksForm = () => {
             />
             <label htmlFor='checkbox-category'>
               <img
-                src={icons.tags_white}
+                src={icons.category_white}
                 alt='category button icon'
-                className={isTagsActive ? `${style.img} ${style['img--active']} ` : style.img}
+                className={isCategoryActive ? `${style.img} ${style['img--active']} ` : style.img}
               />
-              <p>category</p>
+              <p
+                className={
+                  isCategoryActive
+                    ? `${style.undertext} ${style['undertext--active']} `
+                    : style.undertext
+                }
+              >
+                category
+              </p>
             </label>
           </div>
           <div className={style.additional__item}>
@@ -95,30 +142,34 @@ const TasksForm = () => {
             />
             <label htmlFor='checkbox-additional'>
               <img
-                src={icons.tags_white}
+                src={icons.text_white}
                 alt='additional button icon'
-                className={isTagsActive ? `${style.img} ${style['img--active']} ` : style.img}
+                className={isAdditionalActive ? `${style.img} ${style['img--active']} ` : style.img}
               />
-              <p>additional</p>
+              <p
+                className={
+                  isAdditionalActive
+                    ? `${style.undertext} ${style['undertext--active']} `
+                    : style.undertext
+                }
+              >
+                additional
+              </p>
             </label>
           </div>
         </div>
-        {isTagsActive && (
-          <div>
-            <p>hello tags</p>
-          </div>
-        )}
-        {isCategoryActive && (
-          <div>
-            <p>hello category</p>
-          </div>
-        )}
+        {isTagsActive && <Tags tagsClickHandleFunction={tagsClickHandleFunction} />}
+        {isCategoryActive && <Categories handleCategorySelect={handleCategorySelect} />}
         {isAdditionalActive && (
           <div>
-            <p>hello additional</p>
+            <textarea
+              type='text'
+              value={additionalText}
+              onChange={(event) => setAdditionalText(event.target.value)}
+            />
           </div>
         )}
-        <button className={style.btn}>add</button>
+        <button className={`${style.btn} ${style['btn--send']}`}>add</button>
       </form>
     </div>
   );

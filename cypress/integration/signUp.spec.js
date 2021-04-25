@@ -1,4 +1,4 @@
-describe('Renders website elements properly', () => {
+describe('Renders signup website elements properly', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/signUp');
   });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useUserData } from '../../contexts/UserDataContext';
 import style from './LoginView.module.scss';
 import icons from '../../assets/icons';
 
@@ -9,6 +10,7 @@ const LoginView = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
+  const { authUserWithFirestore } = useUserData();
   const history = useHistory();
 
   const submitFn = async (e) => {
@@ -16,7 +18,14 @@ const LoginView = () => {
 
     try {
       setError('');
-      await login(email, password);
+      await login(email, password)
+        .then(async (user) => {
+          console.log(user.user.uid);
+          await authUserWithFirestore(user);
+        })
+        .catch((error) => {
+          setError(`${error.code} : ${error.message}`);
+        });
       history.push('/dashboard');
     } catch {
       setError('Failed to log in');
