@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useUserData } from '../../contexts/UserDataContext';
 import icons from '../../assets/icons';
 import style from './TasksForm.module.scss';
 import Tags from '../Tags/Tags';
@@ -14,13 +15,16 @@ const TasksForm = ({ handleCloseFormModal }) => {
   const [tagsArray, setTagsArray] = useState([]);
   const [category, setCategory] = useState('');
   const [additionalText, setAdditionalText] = useState('');
+  const { submitTaskFn } = useUserData();
 
-  const submitFn = (event) => {
+  const submitFn = async (event) => {
     event.preventDefault();
 
     console.log(
       `${title}, ${finishDate}, ${finishTime}, ${tagsArray}, ${category}, ${additionalText}`
     );
+
+    await submitTaskFn(title, finishDate, finishTime, tagsArray, category, additionalText);
   };
 
   const tagsClickHandleFunction = (event) => {
@@ -92,7 +96,7 @@ const TasksForm = ({ handleCloseFormModal }) => {
               id='checkbox-tags'
               onChange={() => setTagsActiveState(!isTagsActive)}
             />
-            <label htmlFor='checkbox-tags'>
+            <label htmlFor='checkbox-tags' data-testid='tasks-form-tags-label'>
               <img
                 src={icons.tags_white}
                 alt='tags button icon'
@@ -116,7 +120,7 @@ const TasksForm = ({ handleCloseFormModal }) => {
               id='checkbox-category'
               onChange={() => setCategoryActiveState(!isCategoryActive)}
             />
-            <label htmlFor='checkbox-category'>
+            <label htmlFor='checkbox-category' data-testid='tasks-form-category-label'>
               <img
                 src={icons.category_white}
                 alt='category button icon'
@@ -140,7 +144,7 @@ const TasksForm = ({ handleCloseFormModal }) => {
               id='checkbox-additional'
               onChange={() => setAdditionalActiveState(!isAdditionalActive)}
             />
-            <label htmlFor='checkbox-additional'>
+            <label htmlFor='checkbox-additional' data-testid='tasks-form-additional-text-label'>
               <img
                 src={icons.text_white}
                 alt='additional button icon'
@@ -161,7 +165,7 @@ const TasksForm = ({ handleCloseFormModal }) => {
         {isTagsActive && <Tags tagsClickHandleFunction={tagsClickHandleFunction} />}
         {isCategoryActive && <Categories handleCategorySelect={handleCategorySelect} />}
         {isAdditionalActive && (
-          <div>
+          <div data-testid='tasks-form-additional-text-wrapper'>
             <textarea
               type='text'
               value={additionalText}

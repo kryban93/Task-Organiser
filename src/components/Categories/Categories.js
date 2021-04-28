@@ -4,7 +4,7 @@ import icons from '../../assets/icons';
 
 const Categories = ({ handleCategorySelect }) => {
   return (
-    <div className={style.wrapper}>
+    <div className={style.wrapper} data-testid='tasks-form-category-wrapper'>
       <input
         type='radio'
         name='category'

@@ -32,3 +32,8 @@ label {
   @include primary-font-300;
   font-size: $fontXxs;
 }
+
+li {
+  @include secondary-font-300;
+  font-size: $fontXxs;
+}

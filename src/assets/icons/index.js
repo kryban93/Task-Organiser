@@ -20,6 +20,7 @@ import category_purple from './category_purple.svg';
 import category_red from './category_red.svg';
 import category_yellow from './category_yellow.svg';
 import close_white from './close_white.svg';
+import chevron_white from './chevron_white.svg';
 
 const icons = {
   home,
@@ -44,6 +45,7 @@ const icons = {
   category_purple,
   category_red,
   category_yellow,
+  chevron_white,
 };
 
 export default icons;
