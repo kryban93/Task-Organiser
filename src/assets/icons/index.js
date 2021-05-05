@@ -21,6 +21,8 @@ import category_red from './category_red.svg';
 import category_yellow from './category_yellow.svg';
 import close_white from './close_white.svg';
 import chevron_white from './chevron_white.svg';
+import checkbox_unchecked from './checkbox_unchecked.svg';
+import checkbox_checked from './checkbox_checked.svg';
 
 const icons = {
   home,
@@ -46,6 +48,8 @@ const icons = {
   category_red,
   category_yellow,
   chevron_white,
+  checkbox_unchecked,
+  checkbox_checked,
 };
 
 export default icons;

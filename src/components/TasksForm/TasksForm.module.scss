@@ -79,6 +79,10 @@
     border-radius: 0.3rem;
     padding: 10px 65px;
     margin: 20px;
+
+    &:disabled {
+      background-color: $green-200;
+    }
   }
 }
 

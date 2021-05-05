@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { database } from '../firebase';
+import randomId from '../additional/randomId';
 
 const UserDataContext = React.createContext();
 
@@ -50,10 +51,12 @@ export const UserDataProvider = ({ children }) => {
     additionalText
   ) => {
     const created = new Date();
+    const taskId = randomId();
     await usersRef
       .doc(TEMPORARY_USER_ID)
       .collection('tasks')
-      .add({
+      .doc(`${taskId}`)
+      .set({
         title,
         finishDate,
         finishTime,
@@ -62,6 +65,7 @@ export const UserDataProvider = ({ children }) => {
         additionalText,
         created,
         isFinished: false,
+        taskId: taskId,
       })
       .then(() => {
         console.log('Created task in user');
@@ -89,6 +93,24 @@ export const UserDataProvider = ({ children }) => {
       });
   };
 
+  const changeTaskFinishState = async (taskId) => {
+    let tempTask;
+    await usersRef
+      .doc(TEMPORARY_USER_ID)
+      .collection('tasks')
+      .doc(`${taskId}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          tempTask = doc.data();
+        }
+      });
+
+    await usersRef.doc(TEMPORARY_USER_ID).collection('tasks').doc(`${taskId}`).update({
+      isFinished: !tempTask.isFinished,
+    });
+  };
+
   const value = {
     activeUser,
     createUserInFirestore,
@@ -96,6 +118,7 @@ export const UserDataProvider = ({ children }) => {
     submitTaskFn,
     trackTasksCollection,
     tasksCollection,
+    changeTaskFinishState,
   };
 
   return <UserDataContext.Provider value={value}>{children}</UserDataContext.Provider>;

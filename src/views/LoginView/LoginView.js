@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useUserData } from '../../contexts/UserDataContext';
 import style from './LoginView.module.scss';
 import icons from '../../assets/icons';
+import Loader from '../../components/Loader/Loader';
 
 const LoginView = () => {
   const [email, setEmail] = useState('');
@@ -12,11 +13,13 @@ const LoginView = () => {
   const { login } = useAuth();
   const { authUserWithFirestore } = useUserData();
   const history = useHistory();
+  const [isLoading, setLoadingState] = useState(false);
 
   const submitFn = async (e) => {
     e.preventDefault();
 
     try {
+      setLoadingState(true);
       setError('');
       await login(email, password)
         .then(async (user) => {
@@ -26,6 +29,7 @@ const LoginView = () => {
         .catch((error) => {
           setError(`${error.code} : ${error.message}`);
         });
+      setLoadingState(false);
       history.push('/dashboard');
     } catch {
       setError('Failed to log in');
@@ -71,7 +75,12 @@ const LoginView = () => {
           </label>
         </div>
 
-        <button className={`${style.btn} ${style['btn-send']}`} data-testid='login-form-send-btn'>
+        <button
+          className={`${style.btn} ${style['btn-send']}`}
+          data-testid='login-form-send-btn'
+          disabled={isLoading}
+          type='submit'
+        >
           login
         </button>
       </form>
@@ -82,6 +91,7 @@ const LoginView = () => {
           Sign in
         </Link>
       </p>
+      {isLoading && <Loader />}
     </section>
   );
 };

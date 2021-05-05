@@ -1,35 +1,93 @@
 @import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
 
 .wrapper {
   display: flex;
-
+  flex-direction: column;
   margin: 5px;
-  border-bottom: 1px solid $grey-100;
+  border-bottom: 0.5px solid $modal-color;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
 }
 
 .category {
   height: 20px;
   width: 20px;
   border-radius: 5px;
+  border: 1px solid $grey-100;
 
   &-orange {
     background-color: $orange-300;
+    border: none;
   }
 
   &-red {
     background-color: $red-300;
+    border: none;
   }
+
+  &-green {
+    background-color: $green-300;
+    border: none;
+  }
+
+  &-blue {
+    background-color: $blue-300;
+    border: none;
+  }
+
+  &-purple {
+    background-color: $purple-300;
+    border: none;
+  }
+
+  &-yellow {
+    background-color: $yellow-300;
+    border: none;
+  }
+}
+
+.textWrapper {
+  padding: 5px;
+  flex-grow: 1;
+  & > h3 {
+    font-size: 1rem;
+  }
+  & > p {
+    font-size: calc(#{$fontXxs} / 1.5);
+  }
+}
+
+.buttonsWrapper {
+  display: flex;
+  flex-direction: row;
 }
 
 .tags {
   display: flex;
+
+  &_item {
+    background-color: $modal-color;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 }
 
 .btn {
+  height: 35px;
+  width: 35px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
   &-more {
-    height: 35px;
-    width: 35px;
-    background: none;
   }
 
   &_img {

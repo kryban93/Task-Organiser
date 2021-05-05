@@ -34,6 +34,7 @@ const TasksView = () => {
               additionalText={task.additionalText}
               isFinished={task.isFinished}
               key={task.title}
+              taskId={task.taskId}
             />
           ))
         : null}

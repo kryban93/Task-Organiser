@@ -4,6 +4,7 @@ import icons from '../../assets/icons';
 import style from './TasksForm.module.scss';
 import Tags from '../Tags/Tags';
 import Categories from '../Categories/Categories';
+import Loader from '../Loader/Loader';
 
 const TasksForm = ({ handleCloseFormModal }) => {
   const [title, setTitle] = useState('');
@@ -16,15 +17,19 @@ const TasksForm = ({ handleCloseFormModal }) => {
   const [category, setCategory] = useState('');
   const [additionalText, setAdditionalText] = useState('');
   const { submitTaskFn } = useUserData();
+  const [isLoading, setLoadingState] = useState(false);
 
   const submitFn = async (event) => {
     event.preventDefault();
+    setLoadingState(true);
 
     console.log(
       `${title}, ${finishDate}, ${finishTime}, ${tagsArray}, ${category}, ${additionalText}`
     );
 
     await submitTaskFn(title, finishDate, finishTime, tagsArray, category, additionalText);
+    handleCloseFormModal();
+    setLoadingState(false);
   };
 
   const tagsClickHandleFunction = (event) => {
@@ -173,8 +178,11 @@ const TasksForm = ({ handleCloseFormModal }) => {
             />
           </div>
         )}
-        <button className={`${style.btn} ${style['btn--send']}`}>add</button>
+        <button className={`${style.btn} ${style['btn--send']}`} disabled={isLoading} type='submit'>
+          add
+        </button>
       </form>
+      {isLoading && <Loader />}
     </div>
   );
 };
