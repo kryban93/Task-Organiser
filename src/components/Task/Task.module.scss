@@ -4,8 +4,9 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  margin: 5px;
-  border-bottom: 0.5px solid $modal-color;
+
+  border-bottom: 0.5px solid $grey-100;
+  background-color: $modal-color;
 }
 
 .content {
@@ -72,7 +73,7 @@
   display: flex;
 
   &_item {
-    background-color: $modal-color;
+    background-color: $grey-100;
     padding: 5px;
     margin: 2px;
     border-radius: 5px;

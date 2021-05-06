@@ -5,6 +5,7 @@ import style from './TasksForm.module.scss';
 import Tags from '../Tags/Tags';
 import Categories from '../Categories/Categories';
 import Loader from '../Loader/Loader';
+import RepeatableTasksForm from '../RepeatableTasksForm/RepeatableTasksForm';
 
 const TasksForm = ({ handleCloseFormModal }) => {
   const [title, setTitle] = useState('');
@@ -13,21 +14,27 @@ const TasksForm = ({ handleCloseFormModal }) => {
   const [isTagsActive, setTagsActiveState] = useState(false);
   const [isCategoryActive, setCategoryActiveState] = useState(false);
   const [isAdditionalActive, setAdditionalActiveState] = useState(false);
+  const [isRepeatableActive, setRepeatableActiveState] = useState(false);
   const [tagsArray, setTagsArray] = useState([]);
   const [category, setCategory] = useState('');
   const [additionalText, setAdditionalText] = useState('');
   const { submitTaskFn } = useUserData();
   const [isLoading, setLoadingState] = useState(false);
+  const [repeatableArray, setRepeatableArray] = useState([]);
 
   const submitFn = async (event) => {
     event.preventDefault();
     setLoadingState(true);
 
-    console.log(
-      `${title}, ${finishDate}, ${finishTime}, ${tagsArray}, ${category}, ${additionalText}`
+    await submitTaskFn(
+      title,
+      finishDate,
+      finishTime,
+      tagsArray,
+      category,
+      additionalText,
+      repeatableArray
     );
-
-    await submitTaskFn(title, finishDate, finishTime, tagsArray, category, additionalText);
     handleCloseFormModal();
     setLoadingState(false);
   };
@@ -44,6 +51,20 @@ const TasksForm = ({ handleCloseFormModal }) => {
     }
 
     setTagsArray(tagsTempArray);
+  };
+
+  const repeatableClickHandleFunction = (event) => {
+    let repeatableTempArray = [];
+
+    if (!repeatableTempArray.includes(event.target.value)) {
+      repeatableTempArray.push(event.target.value);
+    } else {
+      repeatableTempArray = repeatableTempArray.filter((item) => {
+        return item !== event.target.value;
+      });
+    }
+
+    setRepeatableArray(repeatableTempArray);
   };
 
   const handleCategorySelect = (event) => {
@@ -94,6 +115,30 @@ const TasksForm = ({ handleCloseFormModal }) => {
           />
         </div>
         <div className={style.additional}>
+          <div className={style.additional__item}>
+            <input
+              type='checkbox'
+              value='repeatable'
+              id='checkbox-repeatable'
+              onChange={() => setRepeatableActiveState(!isRepeatableActive)}
+            />
+            <label htmlFor='checkbox-repeatable' data-testid='tasks-form-repeatable-text-label'>
+              <img
+                src={icons.repeat_white}
+                alt='repeatable button icon'
+                className={isRepeatableActive ? `${style.img} ${style['img--active']} ` : style.img}
+              />
+              <p
+                className={
+                  isRepeatableActive
+                    ? `${style.undertext} ${style['undertext--active']} `
+                    : style.undertext
+                }
+              >
+                repeatable
+              </p>
+            </label>
+          </div>
           <div className={style.additional__item}>
             <input
               type='checkbox'
@@ -167,11 +212,15 @@ const TasksForm = ({ handleCloseFormModal }) => {
             </label>
           </div>
         </div>
+        {isRepeatableActive && (
+          <RepeatableTasksForm repeatableClickHandleFunction={repeatableClickHandleFunction} />
+        )}
         {isTagsActive && <Tags tagsClickHandleFunction={tagsClickHandleFunction} />}
         {isCategoryActive && <Categories handleCategorySelect={handleCategorySelect} />}
         {isAdditionalActive && (
           <div data-testid='tasks-form-additional-text-wrapper'>
             <textarea
+              className={style.additional__textarea}
               type='text'
               value={additionalText}
               onChange={(event) => setAdditionalText(event.target.value)}

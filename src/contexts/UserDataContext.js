@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { database } from '../firebase';
 import randomId from '../additional/randomId';
 
@@ -11,8 +11,13 @@ export function useUserData() {
 export const UserDataProvider = ({ children }) => {
   const [activeUser, setActiveUser] = useState();
   const [tasksCollection, setTasksCollection] = useState();
+  const [tagsArray, setTagsArray] = useState([]);
   const usersRef = database.collection('users');
   const TEMPORARY_USER_ID = '5VKw2Rj6G8XgDBHO6JVInPmJOeI2';
+
+  useEffect(() => {
+    readTagsArray();
+  }, []);
 
   const createUserInFirestore = async (user, name) => {
     const tempUser = {
@@ -42,13 +47,45 @@ export const UserDataProvider = ({ children }) => {
       });
   };
 
+  const addTag = async (tag) => {
+    let tempUser, tempTagsArray;
+    await usersRef
+      .doc(TEMPORARY_USER_ID)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          tempUser = doc.data();
+        }
+      });
+    tempTagsArray = tempUser.tags;
+    tempTagsArray.push(tag);
+    await usersRef.doc(TEMPORARY_USER_ID).update({
+      tags: tempTagsArray,
+    });
+  };
+
+  const readTagsArray = () => {
+    let tempUser, tempTagsArray;
+    usersRef.doc(TEMPORARY_USER_ID).onSnapshot((doc) => {
+      if (doc.exists) {
+        tempUser = doc.data();
+        tempTagsArray = tempUser.tags;
+        setTagsArray(tempTagsArray);
+      } else {
+        tempTagsArray = [];
+        setTagsArray(tempTagsArray);
+      }
+    });
+  };
+
   const submitTaskFn = async (
     title,
     finishDate,
     finishTime,
     tagsArray,
     category,
-    additionalText
+    additionalText,
+    repeatableArray
   ) => {
     const created = new Date();
     const taskId = randomId();
@@ -66,6 +103,7 @@ export const UserDataProvider = ({ children }) => {
         created,
         isFinished: false,
         taskId: taskId,
+        repeatableArray,
       })
       .then(() => {
         console.log('Created task in user');
@@ -119,6 +157,9 @@ export const UserDataProvider = ({ children }) => {
     trackTasksCollection,
     tasksCollection,
     changeTaskFinishState,
+    addTag,
+    tagsArray,
+    readTagsArray,
   };
 
   return <UserDataContext.Provider value={value}>{children}</UserDataContext.Provider>;

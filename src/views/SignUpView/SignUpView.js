@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useUserData } from '../../contexts/UserDataContext';
 import verifyPassword from '../../additional/verifyPassword';
 import icons from '../../assets/icons';
+import Loader from '../../components/Loader/Loader';
 
 const SignUpView = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const SignUpView = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setLoadingState] = useState(false);
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const { signUp } = useAuth();
   const { createUserInFirestore } = useUserData();
@@ -29,6 +31,7 @@ const SignUpView = () => {
         setError(verifyPassword(password).description);
       } else {
         try {
+          setLoadingState(true);
           await signUp(email, password)
             .then(async (user) => {
               await createUserInFirestore(user, userName);
@@ -36,6 +39,7 @@ const SignUpView = () => {
             .catch((error) => {
               setError(`${error.code}: ${error.message}`);
             });
+          setLoadingState(false);
           history.push('/dashboard');
         } catch {
           setError('Failed to sign up');
@@ -124,6 +128,8 @@ const SignUpView = () => {
           Log in
         </Link>
       </p>
+
+      {isLoading && <Loader />}
     </section>
   );
 };

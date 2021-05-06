@@ -23,6 +23,7 @@ import close_white from './close_white.svg';
 import chevron_white from './chevron_white.svg';
 import checkbox_unchecked from './checkbox_unchecked.svg';
 import checkbox_checked from './checkbox_checked.svg';
+import repeat_white from './repeat_white.svg';
 
 const icons = {
   home,
@@ -50,6 +51,7 @@ const icons = {
   chevron_white,
   checkbox_unchecked,
   checkbox_checked,
+  repeat_white,
 };
 
 export default icons;
